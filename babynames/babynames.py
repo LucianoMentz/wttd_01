@@ -41,7 +41,24 @@ def extract_names(filename):
     followed by the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
     """
-    # +++your code here+++
+    doc = open(filename)
+    page = doc.readlines()
+    doc.close()
+
+    rank = []
+    baby_year = None
+
+    for line in page:
+        if not baby_year:
+            temp = re.findall(r'<h3 align="center">Popularity in (\d+)</h3>', line)
+            if temp:
+                rank.append(temp[0])
+        temp = re.findall(r'<tr align="right"><td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', line)
+        if temp:
+            rank.append(temp[0][1] + ' ' + temp[0][0])
+            rank.append(temp[0][2] + ' ' + temp[0][0])
+    rank.sort()
+    print(rank)
     return
 
 
@@ -64,6 +81,8 @@ def main():
         # +++your code here+++
         # For each filename, get the names, then either print the text output
         # or write it to a summary file
+
+    names = extract_names('baby1990.html')
 
 
 if __name__ == '__main__':

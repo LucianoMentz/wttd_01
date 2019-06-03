@@ -49,8 +49,25 @@ def mimic_dict(filename):
   """Returns mimic dict mapping each word to list of words which follow it."""
   arquivo = open(filename, 'r')
   palavras = arquivo.read().split(' ')
-  # print(palavras)
-  return palavras
+  palavra_a = ''
+  palavra_b = ''
+  dicionario = {}
+  for palavra in palavras:
+    print(palavra)
+    if palavra_a == '':
+      palavra_a = palavra
+    else:
+      if palavra_b == '':
+        palavra_b = palavra
+      else:
+        palavra_a = palavra_b
+        palavra_b = palavra
+      if palavra_a in dicionario:
+        conteudo = dicionario[palavra_a]
+        conteudo.append(palavra_b)
+      else:
+        dicionario[palavra_a] = [palavra_b]
+  return dicionario
 
 
 def print_mimic(mimic_dict, word):

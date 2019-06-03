@@ -38,6 +38,7 @@ print_words() and print_top().
 """
 
 import sys
+from operator import itemgetter, attrgetter
 
 
 # +++your code here+++
@@ -45,7 +46,33 @@ import sys
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
+def create_dict(filename):
+    text = open(filename, 'r')
+    words = text.read().lower().split()
+    mydict = {}
+    for word in words:
+        if word in mydict:
+            mydict[word] += 1
+        else:
+            mydict[word] = 1
+    text.close()
+    return mydict
 
+
+def print_words(filename):
+    mydict = create_dict(filename)
+    print(mydict)
+    for word in mydict:
+        print(word, mydict[word])
+    return
+
+
+def print_top(filename):
+    mydict = create_dict(filename)
+    mydict = sorted(mydict.items(), key=lambda item: item[1], reverse=True)
+    for word in mydict[:21]:
+        print(word[0], word[1])
+    return
 ###
 
 # This basic command line argument parsing code is provided and
